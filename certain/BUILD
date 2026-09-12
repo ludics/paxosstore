@@ -1,4 +1,4 @@
-load("/code_generator/sktools", "protoc")
+# load("/code_generator/sktools", "protoc")
 
 cppflags = [
   "-Wall",

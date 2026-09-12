@@ -8,6 +8,10 @@
 #include "tiny_rpc/tiny_server.h"
 #include "tools/tools_service.h"
 
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
+
 bool g_stop = false;
 
 DEFINE_string(ip0, "127.0.0.1", "Node0's ip");
@@ -22,10 +26,19 @@ DEFINE_int32(index, 0, "Use ip0:port0 as local address for node index 0.");
 DEFINE_int32(server_port_offset, 1000, "Node0's server port is port0+offset.");
 DEFINE_int32(log_level, 4,
              "kZero=0,kFatal=1,kError=2,kWarn=3,kInfo=4,kDebug=5");
+DEFINE_string(data_dir, ".",
+              "Per-replica working directory for plog/log/db files");
 
 int main(int argc, char* argv[]) {
   // 1. Parse arguments.
   google::ParseCommandLineFlags(&argc, &argv, true);
+
+  if (!FLAGS_data_dir.empty() && FLAGS_data_dir != ".") {
+    if (chdir(FLAGS_data_dir.c_str()) != 0) {
+      printf("chdir(%s) failed: %s\n", FLAGS_data_dir.c_str(), strerror(errno));
+      return -1;
+    }
+  }
 
   google::CommandLineFlagInfo info;
   if ((GetCommandLineFlagInfo("index", &info) && info.is_default) ||

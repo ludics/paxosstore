@@ -90,6 +90,8 @@ TEST_F(MsgChannelHelperTest, Normal) {
     ASSERT_EQ(helper.AddWritableChannel(channel), 0);
     channel->set_writable(true);
     ASSERT_EQ(helper.FlushMsgChannel(), 0);
+    // active_timeout_sec is 0; wait so last-active is strictly in the past.
+    usleep(20 * 1000);
     ASSERT_EQ(helper.CleanUnactiveMsgChannel(), 0);
     ASSERT_EQ(helper.GetMsgChannel(addr0_.GetAddrId()), nullptr);
   }

@@ -1,0 +1,31 @@
+diff --git a/co_routine.cpp b/co_routine.cpp
+index f93f771..8242e32 100644
+--- a/co_routine.cpp
++++ b/co_routine.cpp
+@@ -701,12 +701,13 @@ static short EpollEvent2Poll( uint32_t events )
+ 	return e;
+ }
+ 
+-static stCoRoutineEnv_t* g_arrCoEnvPerThread[ 204800 ] = { 0 };
++// Modern Linux pid/tid values routinely exceed 204800 (pid_max is often
++// 4M). Indexing a fixed array by tid segfaults; keep the env in TLS.
++static __thread stCoRoutineEnv_t* g_pCoEnvPerThread = NULL;
+ void co_init_curr_thread_env()
+ {
+-	pid_t pid = GetPid();	
+-	g_arrCoEnvPerThread[ pid ] = (stCoRoutineEnv_t*)calloc( 1,sizeof(stCoRoutineEnv_t) );
+-	stCoRoutineEnv_t *env = g_arrCoEnvPerThread[ pid ];
++	g_pCoEnvPerThread = (stCoRoutineEnv_t*)calloc( 1,sizeof(stCoRoutineEnv_t) );
++	stCoRoutineEnv_t *env = g_pCoEnvPerThread;
+ 
+ 	env->iCallStackSize = 0;
+ 	struct stCoRoutine_t *self = co_create_env( env, NULL, NULL,NULL );
+@@ -724,7 +725,7 @@ void co_init_curr_thread_env()
+ }
+ stCoRoutineEnv_t *co_get_curr_thread_env()
+ {
+-	return g_arrCoEnvPerThread[ GetPid() ];
++	return g_pCoEnvPerThread;
+ }
+ 
+ void OnPollProcessEvent( stTimeoutItem_t * ap )

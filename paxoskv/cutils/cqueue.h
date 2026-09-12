@@ -19,6 +19,7 @@
 #include <queue>
 #include <string>
 #include "log_utils.h"
+#include <functional>
 
 namespace cutils {
 

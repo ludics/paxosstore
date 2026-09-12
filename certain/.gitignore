@@ -1,5 +1,33 @@
-*.pb.*
+# Out-of-tree CMake build
+/build/
+/out/
+
+# Generated protobuf (in-tree leftovers from the old Makefile)
+*.pb.cc
+*.pb.h
+*.pb.o
+
+# Objects / libraries left in the source tree
+*.o
+*.a
+*.gcda
+*.gcno
+*.gcov
+
+# Legacy in-tree binaries
+/server
+/client
+/task_perf
+/plog_worker_perf
+/dump_entry
+*_test
+
+# Runtime artifacts
 /test_db.o/
-/test_log.o/
+/test_log.o
 /test_plog.o/
-/third/
+test.cov.root/
+test_cov.info*
+
+compile_commands.json
+.cache/

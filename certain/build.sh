@@ -1,25 +1,57 @@
 #!/bin/sh
 
-if [ $# != 1 ] ; then
-    echo "Usage: build.sh [libcertain.a|example]"
-    exit
+set -e
+
+usage() {
+  echo "Usage: build.sh [deps|lib|example|test|all]"
+  echo "  deps     build vendored third-party static libraries"
+  echo "  lib      build libcertain.a into build/lib/"
+  echo "  example  build server and client into build/bin/"
+  echo "  test     build and run unit tests"
+  echo "  all      deps + example + test"
+  exit 1
+}
+
+if [ $# != 1 ]; then
+  usage
 fi
 
-set -e  # exit immediately on error
-set -x  # display all commands
+cd "$(dirname "$0")"
 
-git submodule update --init --recursive
+build_deps() {
+  git submodule update --init --recursive
+  sh third/autobuild.sh
+}
 
-if [ $1 = "libcertain.a" ] ; then
-    if test ! -e third/protobuf/src/.libs/libprotobuf.a; then
-        cd third;
-        cd protobuf; sh ./autogen.sh; ./configure; make -j 4; cd ..;
-        cd ..;
-    fi
-    make -j 4 lib;
-elif [ $1 = "example" ] ; then
-    sh third/autobuild.sh; make -j 4 example;
-else
-    echo "Usage: build.sh [libcertain.a|example]"
-    exit
-fi
+configure() {
+  cmake -S . -B build
+}
+
+case "$1" in
+  deps)
+    build_deps
+    ;;
+  lib)
+    configure
+    cmake --build build --target certain -j"$(nproc 2>/dev/null || echo 4)"
+    ;;
+  example)
+    build_deps
+    configure
+    cmake --build build --target server client -j"$(nproc 2>/dev/null || echo 4)"
+    ;;
+  test)
+    configure
+    cmake --build build -j"$(nproc 2>/dev/null || echo 4)"
+    (cd build && ctest --output-on-failure)
+    ;;
+  all)
+    build_deps
+    configure
+    cmake --build build -j"$(nproc 2>/dev/null || echo 4)"
+    (cd build && ctest --output-on-failure)
+    ;;
+  *)
+    usage
+    ;;
+esac

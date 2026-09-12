@@ -2,6 +2,7 @@
 #include <memory>
 #include <mutex>
 #include <vector>
+#include <functional>
 
 #include "co_routine_inner.h"
 

@@ -1,6 +1,9 @@
 #include "network/msg_channel.h"
 
 #include "utils/memory.h"
+#include "utils/log.h"
+
+#include "sys/uio.h"
 
 namespace certain {
 

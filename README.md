@@ -33,8 +33,10 @@ Please refer to the following publications for the technical details of PaxosSto
 
 ### Build
 
-- [Certain](./certain)
-- [PaxosKV](./paxoskv)
+- [Certain](./certain): `cmake -S certain -B certain/build && cmake --build certain/build -j`
+- [PaxosKV](./paxoskv): `cmake -S paxoskv -B paxoskv/build && cmake --build paxoskv/build -j`
+
+Binaries land in each component's `build/bin` (or `build/lib`) directory, not in the source tree.
 
 ### License
 

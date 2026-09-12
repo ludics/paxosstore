@@ -8,6 +8,10 @@ if test ! -e rocksdb/librocksdb.a; then
     cd rocksdb; make -j 4 static_lib; cd ..;
 fi
 
+LIBCO_PATCH=../patches/libco-thread-local-env.patch
+if test -f "$LIBCO_PATCH" && ! grep -q g_pCoEnvPerThread libco/co_routine.cpp; then
+    patch -p1 -d libco < "$LIBCO_PATCH"
+fi
 if test ! -e libco/lib/libcolib.a; then
     cd libco; make -j 4 colib; cd ..;
 fi

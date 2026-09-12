@@ -1,0 +1,53 @@
+# Build trees
+build/
+out/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+CTestTestfile.cmake
+Testing/
+install_manifest.txt
+compile_commands.json
+.cache/
+
+# Objects / libraries
+*.o
+*.a
+*.so
+*.so.*
+*.dylib
+*.gcda
+*.gcno
+*.gcov
+
+# Generated protobuf (in-tree leftovers from the old Makefile)
+*.pb.cc
+*.pb.h
+*.pb.o
+
+# Coverage
+test_cov.info*
+test.cov.root/
+
+# Runtime artifacts created by Certain examples / tests
+test_plog.o/
+test_log.o
+test_log.o.*
+test_db.o/
+
+# Legacy in-tree binaries from the old Certain Makefile
+certain/server
+certain/client
+certain/task_perf
+certain/plog_worker_perf
+certain/dump_entry
+certain/**/*_test
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.vscode/
