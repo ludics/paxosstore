@@ -20,6 +20,7 @@ DEFINE_int32(requests_per_thread, 250, "Requests per thread");
 DEFINE_int32(value_size, 64, "Size of payload bytes");
 DEFINE_string(cmd, "appendstring", "Command type: write, appendstring, read");
 DEFINE_uint64(base_entity, 50000, "Base entity ID to avoid collision");
+DEFINE_bool(single_entity, false, "All threads operate on the exact same base_entity");
 
 int main(int argc, char* argv[]) {
   google::ParseCommandLineFlags(&argc, &argv, true);
@@ -54,7 +55,7 @@ int main(int argc, char* argv[]) {
   for (int t = 0; t < FLAGS_threads; ++t) {
     workers.emplace_back([&, t]() {
       certain::TinyClient client(server_addr);
-      uint64_t entity_id = FLAGS_base_entity + t;
+      uint64_t entity_id = FLAGS_single_entity ? FLAGS_base_entity : (FLAGS_base_entity + t);
       std::vector<double> local_lats;
       local_lats.reserve(FLAGS_requests_per_thread);
 
