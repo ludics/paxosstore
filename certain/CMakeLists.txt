@@ -275,6 +275,9 @@ if(CERTAIN_BUILD_EXAMPLES)
 
   add_executable(benchmark_client tools/benchmark_client.cc)
   target_link_libraries(benchmark_client PRIVATE certain_default)
+
+  add_executable(tinyrpc_bench tools/tinyrpc_bench.cc)
+  target_link_libraries(tinyrpc_bench PRIVATE certain_default)
 endif()
 
 #------------------------------------------------------------------------------

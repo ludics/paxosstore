@@ -14,6 +14,12 @@
 | [**03. Plog 与 DB 落盘存储结构深度解析**](./03_STORAGE_ENGINE_AND_PLOG.md) | 存储引擎与二进制布局 | RocksDB 24 字节大端序 `EntryKey` 内存对齐设计、`EntryRecord` Protobuf 序列化、使用 `inspect_plog` 逐字节 Dump 真实落盘 Hex、`DbImpl` 内存 Shard 与定期快照机制 |
 | [**04. 读写链路、重放追齐与自愈**](./04_READ_WRITE_REPLAY_AND_CATCHUP.md) | 协议链路与容灾恢复 | `Certain::Write` 逐行时序、`Certain::Read` 读语义实质（空槽位检查 vs 脑裂防御）、`Replay` 追齐提交、`CatchupWorker` 流量受控追齐、Node 重启自愈四阶段实测跟踪 |
 | [**05. 实验实测、验证指南与基准性能测试**](./05_BENCHMARK_AND_EXPERIMENTAL_VALIDATION.md) | 实战测试与性能评测 | 完整 3 节点集群搭建实战、严格连续写入与跳洞拒绝实验、多数派宕机容灾实测、`benchmark_client` 压测报告（QPS 1000+，P99 < 10ms） |
+| [**06. 高性能网络通信与 TinyRPC 架构**](./06_NETWORK_AND_TINY_RPC.md) | 网络 I/O 与 RPC 体系 | `epoll` 反应堆、`MsgChannel` 全双工信道、`WriteItemList` 分散写零拷贝、线程间无锁队列通信机制、`TinyRPC` 框架剖析与实测（30,000+ QPS / 0.13ms 纯网络延迟） |
+| [**07. 半对称协议与端到端 Paxos 流程**](./07_SEMI_SYMMETRIC_PAXOS_AND_FLOW.md) | 协议报文与三节点时序 | 半对称报文（`PaxosMsg`）哲学、`SwitchToLocalView` 视角反转、A/B/C 三节点完整交互流转、Pre-Authorization（预授权租约）源码深挖 |
+| [**08. 协议日志 PLog 的生命周期与 GC**](./08_PLOG_LIFECYCLE_AND_GC.md) | PLog 读写与垃圾回收 | 写入全流程与 RocksDB `WriteBatch` 组提交、`PlogReadonlyWorker` 读写分离、RocksDB `CompactionFilter`（`PlogFilter`）基于提交点安全物理回收 |
+| [**09. 日志空洞、Catchup 追赶与 Recover**](./09_CATCHUP_AND_RECOVER_DEEP_DIVE.md) | 故障恢复与快照兜底 | 理论 Paxos 空洞 vs 为什么 Certain 客户端跳写报 `-3006`、双游标保证连续 Apply、`CatchupWorker` 双重令牌桶限流保护、旧 PLog 被清后的 `SnapshotRecover` 兜底恢复 |
+| [**10. 源码深度研读路线与实操调试指南**](./10_STUDY_GUIDE_AND_DEBUG_TRICKS.md) | 进阶指引与调试秘籍 | 四阶段科学研读路径、核心函数必读清单、`dump_entry` 在线状态机捕获、`inspect_plog` 穿透存储检查、网络分区与故障注入实战实验 |
+| [**📊 现代协议时序矢量流程图**](./paxosstore-modern-protocol-process.svg) | 矢量时序图 (SVG) | 基于当前 C++11 代码库绘制的 Client、Wrapper、EntityWorker、PlogWorker、MsgWorker、Acceptor Peer 端到端调用流转 |
 
 ---
 

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1280px" height="1200px" viewBox="-0.5 -0.5 1280 1200" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#333" />
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="20" y="15" width="1240" height="50" rx="8" fill="#1e293b" />
+  <text x="640" y="46" fill="#ffffff" font-size="18px" font-weight="bold" text-anchor="middle">Certain Multi-Paxos: Modern Architecture &amp; End-to-End Sequence Diagram (C++11 Pipeline)</text>
+
+  <!-- Participant Lifelines & Background Columns -->
+  <!-- Col 1: Client & Wrapper -->
+  <rect x="20" y="80" width="160" height="40" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="100" y="105" fill="#1e3a8a" font-size="13px" font-weight="bold" text-anchor="middle">Client &amp; Wrapper</text>
+  <line x1="100" y1="120" x2="100" y2="1160" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Col 2: Proposer EntityWorker -->
+  <rect x="200" y="80" width="170" height="40" rx="6" fill="#eef2ff" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="285" y="105" fill="#312e81" font-size="13px" font-weight="bold" text-anchor="middle">Proposer EntityWorker</text>
+  <line x1="285" y1="120" x2="285" y2="1160" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Col 3: Proposer PlogWorker -->
+  <rect x="390" y="80" width="160" height="40" rx="6" fill="#fdf4ff" stroke="#c084fc" stroke-width="2" filter="url(#shadow)"/>
+  <text x="470" y="105" fill="#581c87" font-size="13px" font-weight="bold" text-anchor="middle">Proposer PlogWorker</text>
+  <line x1="470" y1="120" x2="470" y2="1160" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Col 4: Proposer MsgWorker -->
+  <rect x="570" y="80" width="160" height="40" rx="6" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <text x="650" y="105" fill="#14532d" font-size="13px" font-weight="bold" text-anchor="middle">Proposer MsgWorker</text>
+  <line x1="650" y1="120" x2="650" y2="1160" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Col 5: Acceptor MsgWorker -->
+  <rect x="750" y="80" width="160" height="40" rx="6" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <text x="830" y="105" fill="#14532d" font-size="13px" font-weight="bold" text-anchor="middle">Acceptor MsgWorker</text>
+  <line x1="830" y1="120" x2="830" y2="1160" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Col 6: Acceptor EntityWorker -->
+  <rect x="930" y="80" width="170" height="40" rx="6" fill="#eef2ff" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1015" y="105" fill="#312e81" font-size="13px" font-weight="bold" text-anchor="middle">Acceptor EntityWorker</text>
+  <line x1="1015" y1="120" x2="1015" y2="1160" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Col 7: Acceptor PlogWorker -->
+  <rect x="1120" y="80" width="140" height="40" rx="6" fill="#fdf4ff" stroke="#c084fc" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1190" y="105" fill="#581c87" font-size="13px" font-weight="bold" text-anchor="middle">Acceptor Plog</text>
+  <line x1="1190" y1="120" x2="1190" y2="1160" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Sequence Actions -->
+  <!-- 1. Client Call -->
+  <line x1="100" y1="150" x2="280" y2="150" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="120" y="130" width="140" height="34" rx="4" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="190" y="145" font-size="11px" font-weight="bold" text-anchor="middle" fill="#1e40af">1. Certain::Write()</text>
+  <text x="190" y="158" font-size="9px" text-anchor="middle" fill="#64748b">SyncWait(co_cond) w</text>
+
+  <!-- 2. Proposer Process Write -->
+  <rect x="235" y="180" width="100" height="50" rx="4" fill="#e0e7ff" stroke="#818cf8"/>
+  <text x="285" y="196" font-size="10px" font-weight="bold" text-anchor="middle" fill="#312e81">2. HandleWriteCmd</text>
+  <text x="285" y="210" font-size="9px" text-anchor="middle" fill="#4338ca">machine->Promise()</text>
+  <text x="285" y="222" font-size="9px" text-anchor="middle" fill="#4338ca"> pn=4 ( PreAuth)</text>
+
+  <!-- 3. Push to PlogReq -->
+  <line x1="285" y1="245" x2="465" y2="245" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="375" y="240" font-size="10px" font-weight="bold" text-anchor="middle" fill="#6d28d9">3. StoreEntryInfo (PlogReqQueue)</text>
+
+  <!-- 4. Plog Fsync Promise -->
+  <rect x="420" y="260" width="100" height="40" rx="4" fill="#fae8ff" stroke="#d8b4fe"/>
+  <text x="470" y="276" font-size="10px" font-weight="bold" text-anchor="middle" fill="#701a75">4. WriteBatch</text>
+  <text x="470" y="290" font-size="9px" text-anchor="middle" fill="#86198f">=Ø Promise °U</text>
+
+  <!-- 5. Plog Response -->
+  <line x1="470" y1="315" x2="290" y2="315" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="380" y="310" font-size="10px" font-weight="bold" text-anchor="middle" fill="#6d28d9">5. PlogRspQueue Þ</text>
+
+  <!-- 6. Broadcast Prepare via MsgWorker -->
+  <line x1="285" y1="340" x2="645" y2="340" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="465" y="335" font-size="10px" font-weight="bold" text-anchor="middle" fill="#15803d">6. Broadcast (MsgReqQueue)</text>
+
+  <!-- 7. Network Transmission (Semi-Symmetric Prepare) -->
+  <line x1="650" y1="365" x2="825" y2="365" stroke="#059669" stroke-width="2" stroke-dasharray="2 2" marker-end="url(#arrow)"/>
+  <rect x="670" y="350" width="140" height="30" rx="4" fill="#ecfdf5" stroke="#6ee7b7"/>
+  <text x="740" y="364" font-size="10px" font-weight="bold" text-anchor="middle" fill="#065f46">Jùð PaxosMsg (TCP)</text>
+  <text x="740" y="375" font-size="8px" text-anchor="middle" fill="#047857">local_record: pn=4, peer: 0</text>
+
+  <!-- 8. Acceptor Ingestion -->
+  <line x1="830" y1="395" x2="1010" y2="395" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="920" y="390" font-size="10px" font-weight="bold" text-anchor="middle" fill="#3730a3">8. EntityReqQueue</text>
+
+  <!-- 9. Acceptor Process Prepare -->
+  <rect x="965" y="410" width="100" height="50" rx="4" fill="#e0e7ff" stroke="#818cf8"/>
+  <text x="1015" y="425" font-size="10px" font-weight="bold" text-anchor="middle" fill="#312e81">9. SwitchToLocalView</text>
+  <text x="1015" y="438" font-size="9px" text-anchor="middle" fill="#4338ca">machine->Update()</text>
+  <text x="1015" y="450" font-size="9px" text-anchor="middle" fill="#4338ca">Promise ,0ÐGó 4</text>
+
+  <!-- 10. Acceptor Plog -->
+  <line x1="1015" y1="475" x2="1185" y2="475" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1100" y="470" font-size="10px" font-weight="bold" text-anchor="middle" fill="#6d28d9">10. PlogReq</text>
+
+  <rect x="1140" y="490" width="100" height="35" rx="4" fill="#fae8ff" stroke="#d8b4fe"/>
+  <text x="1190" y="512" font-size="9px" font-weight="bold" text-anchor="middle" fill="#701a75">Fsync Promised</text>
+
+  <line x1="1190" y1="540" x2="1020" y2="540" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1105" y="535" font-size="10px" font-weight="bold" text-anchor="middle" fill="#6d28d9">11. PlogRsp</text>
+
+  <!-- 12. Acceptor Replies Promise via MsgWorker -->
+  <line x1="1015" y1="565" x2="835" y2="565" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="925" y="560" font-size="10px" font-weight="bold" text-anchor="middle" fill="#15803d">12. Send Promise Back</text>
+
+  <line x1="830" y1="590" x2="655" y2="590" stroke="#059669" stroke-width="2" stroke-dasharray="2 2" marker-end="url(#arrow)"/>
+  <text x="740" y="585" font-size="10px" font-weight="bold" text-anchor="middle" fill="#065f46">JùðÞ (TCP: promised=4)</text>
+
+  <!-- 13. Proposer Receives Promise -->
+  <line x1="650" y1="615" x2="290" y2="615" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="470" y="610" font-size="10px" font-weight="bold" text-anchor="middle" fill="#3730a3">13. EntityReqQueue</text>
+
+  <!-- 14. Proposer Phase 2: Accept -->
+  <rect x="230" y="635" width="110" height="60" rx="4" fill="#e0e7ff" stroke="#818cf8"/>
+  <text x="285" y="652" font-size="10px" font-weight="bold" text-anchor="middle" fill="#312e81">14. Majority Promise!</text>
+  <text x="285" y="666" font-size="9px" text-anchor="middle" fill="#4338ca">kMajorityPromise</text>
+  <text x="285" y="678" font-size="9px" text-anchor="middle" fill="#4338ca">machine->Accept("val")</text>
+  <text x="285" y="690" font-size="9px" text-anchor="middle" fill="#4338ca">kAcceptLocal</text>
+
+  <!-- 15. Store Accept to Plog -->
+  <line x1="285" y1="710" x2="465" y2="710" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="375" y="705" font-size="10px" font-weight="bold" text-anchor="middle" fill="#6d28d9">15. StoreEntryInfo (Accept)</text>
+
+  <rect x="420" y="725" width="100" height="35" rx="4" fill="#fae8ff" stroke="#d8b4fe"/>
+  <text x="470" y="747" font-size="9px" font-weight="bold" text-anchor="middle" fill="#701a75">Fsync Accepted</text>
+
+  <line x1="470" y1="775" x2="290" y2="775" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="380" y="770" font-size="10px" font-weight="bold" text-anchor="middle" fill="#6d28d9">16. PlogRsp</text>
+
+  <!-- 17. Broadcast Accept to Peers -->
+  <line x1="285" y1="800" x2="645" y2="800" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="465" y="795" font-size="10px" font-weight="bold" text-anchor="middle" fill="#15803d">17. Broadcast Accept</text>
+
+  <line x1="650" y1="825" x2="825" y2="825" stroke="#059669" stroke-width="2" stroke-dasharray="2 2" marker-end="url(#arrow)"/>
+  <text x="740" y="820" font-size="10px" font-weight="bold" text-anchor="middle" fill="#065f46">Jùð Accept (TCP)</text>
+
+  <!-- 18. Acceptor Accepts -->
+  <line x1="830" y1="850" x2="1010" y2="850" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="920" y="845" font-size="10px" font-weight="bold" text-anchor="middle" fill="#3730a3">18. EntityReqQueue</text>
+
+  <rect x="965" y="865" width="100" height="40" rx="4" fill="#e0e7ff" stroke="#818cf8"/>
+  <text x="1015" y="882" font-size="9px" font-weight="bold" text-anchor="middle" fill="#312e81">machine->Update()</text>
+  <text x="1015" y="895" font-size="9px" text-anchor="middle" fill="#4338ca">kAcceptRemote</text>
+
+  <line x1="1015" y1="920" x2="1185" y2="920" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1100" y="915" font-size="10px" font-weight="bold" text-anchor="middle" fill="#6d28d9">19. Store Plog</text>
+
+  <rect x="1140" y="930" width="100" height="30" rx="4" fill="#fae8ff" stroke="#d8b4fe"/>
+  <text x="1190" y="950" font-size="9px" font-weight="bold" text-anchor="middle" fill="#701a75">Fsync Accepted</text>
+
+  <line x1="1190" y1="975" x2="1020" y2="975" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="1015" y1="995" x2="835" y2="995" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="925" y="990" font-size="10px" font-weight="bold" text-anchor="middle" fill="#15803d">20. Send Accepted</text>
+
+  <line x1="830" y1="1020" x2="655" y2="1020" stroke="#059669" stroke-width="2" stroke-dasharray="2 2" marker-end="url(#arrow)"/>
+  <text x="740" y="1015" font-size="10px" font-weight="bold" text-anchor="middle" fill="#065f46">Jùð Accepted Þ</text>
+
+  <!-- 21. Proposer Chosen -->
+  <line x1="650" y1="1045" x2="290" y2="1045" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="230" y="1060" width="110" height="50" rx="4" fill="#dcfce7" stroke="#4ade80"/>
+  <text x="285" y="1078" font-size="10px" font-weight="bold" text-anchor="middle" fill="#14532d">21. kChosen!</text>
+  <text x="285" y="1092" font-size="8px" text-anchor="middle" fill="#166534">PreAuth ++, DbWorker Ð¤</text>
+
+  <!-- 22. Wakeup Client -->
+  <line x1="280" y1="1125" x2="105" y2="1125" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="130" y="1110" width="120" height="30" rx="4" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="190" y="1128" font-size="10px" font-weight="bold" text-anchor="middle" fill="#1e40af">22. ReplyClient (Ret 0)</text>
+
+</svg>
