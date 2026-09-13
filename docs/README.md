@@ -20,6 +20,7 @@
 | [**09. 日志空洞、Catchup 追赶与 Recover**](./09_CATCHUP_AND_RECOVER_DEEP_DIVE.md) | 故障恢复与快照兜底 | 理论 Paxos 空洞 vs 为什么 Certain 客户端跳写报 `-3006`、双游标保证连续 Apply、`CatchupWorker` 双重令牌桶限流保护、旧 PLog 被清后的 `SnapshotRecover` 兜底恢复 |
 | [**10. 源码深度研读路线与实操调试指南**](./10_STUDY_GUIDE_AND_DEBUG_TRICKS.md) | 进阶指引与调试秘籍 | 四阶段科学研读路径、核心函数必读清单、`dump_entry` 在线状态机捕获、`inspect_plog` 穿透存储检查、网络分区与故障注入实战实验 |
 | [**11. 源码全景地图与核心文件索引**](./11_SOURCE_CODE_MAP_AND_INDEX.md) | 源码地图与索引清单 | Certain 全部子目录分层解析、核心类/结构体与核心方法逐一拆解、全局核心符号（Symbol）快速定位地图 |
+| [**12. 详细源码文件索引地图（全量）**](./12_DETAILED_FILE_BY_FILE_INDEX.md) | 地毯式逐文件索引 | 对 `certain/` 下的每一个头文件、实现文件、测试文件与脚本逐一拆解：提供了什么、实现了什么 |
 | [**📊 现代协议时序矢量流程图**](./paxosstore-modern-protocol-process.svg) | 矢量时序图 (SVG) | 基于当前 C++11 代码库绘制的 Client、Wrapper、EntityWorker、PlogWorker、MsgWorker、Acceptor Peer 端到端调用流转 |
 | [**📊 现代协议泳道密排图**](./paxosstore-modern-protocol-process-compact.svg) | 泳道流程图 (SVG) | 无 PreAuth 的 2-RTT 写入：七列泳道密排，对照当前 `HandleWriteCmd` / `HandlePaxosCmd` / `user_rsp_queue` |
 | [**📊 PreAuth 1-RTT 泳道密排图**](./paxosstore-modern-protocol-process-preauth-compact.svg) | 泳道流程图 (SVG) | `IsLocalAcceptable` 成立时同一次 `HandleWriteCmd` 内 Promise+Accept，跳过 Phase 1 网络往返 |
