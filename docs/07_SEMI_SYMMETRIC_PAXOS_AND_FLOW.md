@@ -271,7 +271,10 @@ peer_entry_record  = A 眼中 B 的状态
 
 为了让你拥有直观的物理级全局时序感，我们参考经典架构并结合当前开源版本的最新代码（Wrapper、EntityWorker、PlogWorker、MsgWorker、DbWorker、半对称消息交互），绘制了高精度的交互流程矢量图：
 
-📄 **文件位置**：[**`docs/paxosstore-modern-protocol-process.svg`**](./docs/paxosstore-modern-protocol-process.svg)
+📄 **文件位置**：
+- 时序展开：[**`docs/paxosstore-modern-protocol-process.svg`**](./paxosstore-modern-protocol-process.svg)
+- 无 PreAuth（2-RTT）泳道密排：[**`docs/paxosstore-modern-protocol-process-compact.svg`**](./paxosstore-modern-protocol-process-compact.svg)
+- PreAuth（1-RTT）泳道密排：[**`docs/paxosstore-modern-protocol-process-preauth-compact.svg`**](./paxosstore-modern-protocol-process-preauth-compact.svg)
 
 该矢量图采用标准 SVG 格式，清晰标明了：
 1. Client 协程通过 `LibcoNotifyHelper` 挂起与被唤醒的过程；

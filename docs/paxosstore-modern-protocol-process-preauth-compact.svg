@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1121px" height="921px" viewBox="-0.5 -0.5 1121 921" style="background-color:#ffffff">
+  <title>Certain Write PreAuth 1-RTT (compact swimlane)</title>
+  <style>
+    text { font-family: "Comic Sans MS", "DejaVu Sans", sans-serif; fill: #000; font-size: 12px; }
+    .h { font-weight: bold; }
+  </style>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,1.2 L10,5 L0,8.8 Z" fill="#000"/>
+    </marker>
+  </defs>
+
+  <path d="M 0 20 L 0 0 L 1120 0 L 1120 20" fill="#f5f5f5" stroke="#666"/>
+  <path d="M 0 20 L 0 920 L 1120 920 L 1120 20" fill="none" stroke="#666"/>
+  <path d="M 0 20 L 1120 20" fill="none" stroke="#666"/>
+  <text x="560" y="14" class="h" text-anchor="middle">Certain Write - PreAuth (1-RTT)</text>
+
+  <path d="M 0 40 L 0 20 L 160 20 L 160 40" fill="#f8cecc" stroke="#b85450"/>
+  <path d="M 0 40 L 0 920 L 160 920 L 160 40" fill="none" stroke="#b85450"/>
+  <text x="80" y="34" class="h" text-anchor="middle">Client &amp; Wrapper</text>
+
+  <path d="M 160 40 L 160 20 L 320 20 L 320 40" fill="#dae8fc" stroke="#6c8ebf"/>
+  <path d="M 160 40 L 160 920 L 320 920 L 320 40" fill="none" stroke="#6c8ebf"/>
+  <text x="240" y="34" class="h" text-anchor="middle">Proposer EntityWorker</text>
+
+  <path d="M 320 40 L 320 20 L 480 20 L 480 40" fill="#dae8fc" stroke="#6c8ebf"/>
+  <path d="M 320 40 L 320 920 L 480 920 L 480 40" fill="none" stroke="#6c8ebf"/>
+  <text x="400" y="34" class="h" text-anchor="middle">Proposer PlogWorker</text>
+
+  <path d="M 480 40 L 480 20 L 640 20 L 640 40" fill="#dae8fc" stroke="#6c8ebf"/>
+  <path d="M 480 40 L 480 920 L 640 920 L 640 40" fill="none" stroke="#6c8ebf"/>
+  <text x="560" y="34" class="h" text-anchor="middle">Proposer MsgWorker</text>
+
+  <path d="M 640 40 L 640 20 L 800 20 L 800 40" fill="#d5e8d4" stroke="#82b366"/>
+  <path d="M 640 40 L 640 920 L 800 920 L 800 40" fill="none" stroke="#82b366"/>
+  <text x="720" y="34" class="h" text-anchor="middle">Acceptor MsgWorker</text>
+
+  <path d="M 800 40 L 800 20 L 960 20 L 960 40" fill="#d5e8d4" stroke="#82b366"/>
+  <path d="M 800 40 L 800 920 L 960 920 L 960 40" fill="none" stroke="#82b366"/>
+  <text x="880" y="34" class="h" text-anchor="middle">Acceptor EntityWorker</text>
+
+  <path d="M 960 40 L 960 20 L 1120 20 L 1120 40" fill="#d5e8d4" stroke="#82b366"/>
+  <path d="M 960 40 L 960 920 L 1120 920 L 1120 40" fill="none" stroke="#82b366"/>
+  <text x="1040" y="34" class="h" text-anchor="middle">Acceptor PlogWorker</text>
+
+  <path d="M 80 100 L 80 888" fill="none" stroke="#000" stroke-dasharray="1 1"/>
+  <rect x="48" y="478" width="64" height="16" fill="#fff"/>
+  <text x="80" y="490" text-anchor="middle">sync wait</text>
+
+  <!-- Wrapper -->
+  <rect x="10" y="50" width="140" height="50" rx="7.5" fill="#f8cecc" stroke="#b85450"/>
+  <text x="14" y="64">Certain::Write</text>
+  <text x="14" y="80">1. AllocContext</text>
+  <text x="14" y="94">2. SyncWait(co_cond)</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="150,75 240,75 240,108"/>
+  <rect x="178" y="67" width="76" height="14" fill="#fff"/>
+  <text x="216" y="78" text-anchor="middle">user_req_queue</text>
+
+  <!-- HandleWriteCmd: Promise + Accept in one call -->
+  <rect x="170" y="110" width="140" height="150" rx="21" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="174" y="126">HandleWriteCmd</text>
+  <text x="174" y="142">1. pre_auth_entry+1</text>
+  <text x="174" y="156">2. Promise(pre_auth=1)</text>
+  <text x="174" y="170">3. pn = aid+1 (e.g. 1)</text>
+  <text x="174" y="184">4. IsLocalAcceptable</text>
+  <text x="174" y="198">5. machine-&gt;Accept</text>
+  <text x="174" y="212">6. kAcceptLocal</text>
+  <text x="174" y="226">7. StoreEntryInfo</text>
+  <text x="174" y="240">8. PlogReqQueue</text>
+  <text x="174" y="254">skip Phase 1 net</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="310,200 400,200 400,268"/>
+  <rect x="328" y="192" width="76" height="14" fill="#fff"/>
+  <text x="366" y="203" text-anchor="middle">PlogReqQueue</text>
+
+  <rect x="330" y="270" width="140" height="80" rx="12" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="334" y="286">MultiSetRecords</text>
+  <text x="334" y="302">1. SetRecord batch</text>
+  <text x="334" y="316">2. persist Accepted</text>
+  <text x="334" y="330">3. PlogRspQueue</text>
+  <text x="334" y="344">4. WriteBatch</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="330,310 240,310 240,368"/>
+  <rect x="178" y="302" width="76" height="14" fill="#fff"/>
+  <text x="216" y="313" text-anchor="middle">PlogRspQueue</text>
+
+  <rect x="170" y="370" width="140" height="80" rx="12" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="174" y="386">HandleSetFromPlog</text>
+  <text x="174" y="402">1. broadcast=true</text>
+  <text x="174" y="416">2. Broadcast Accept</text>
+  <text x="174" y="430">3. SyncToPeer x N-1</text>
+  <text x="174" y="444">4. GoAndDeleteIfFailed</text>
+
+  <line x1="310" y1="410" x2="488" y2="410" stroke="#000" marker-end="url(#arr)"/>
+  <rect x="358" y="402" width="76" height="14" fill="#fff"/>
+  <text x="396" y="413" text-anchor="middle">MsgReqQueue</text>
+
+  <rect x="490" y="380" width="140" height="70" rx="10.5" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="494" y="396">ConsumeMsgReqQueue</text>
+  <text x="494" y="412">1. serialize Accept</text>
+  <text x="494" y="426">2. RemoveValueInRecord</text>
+  <text x="494" y="440">3. Write + Flush</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="630,410 650,410 650,230 630,230 630,90 642,90"/>
+  <rect x="610" y="222" width="60" height="14" fill="#fff"/>
+  <text x="640" y="233" text-anchor="middle">TCP pn=1</text>
+
+  <rect x="650" y="50" width="140" height="80" rx="12" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="654" y="66">OnMessage</text>
+  <text x="654" y="82">1. HandleRead bytes</text>
+  <text x="654" y="96">2. CreateCmd</text>
+  <text x="654" y="110">3. EntityReqQueue</text>
+  <text x="654" y="124">first msg = Accept</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="790,90 880,90 880,138"/>
+  <rect x="818" y="82" width="84" height="14" fill="#fff"/>
+  <text x="860" y="93" text-anchor="middle">EntityReqQueue</text>
+
+  <rect x="810" y="140" width="140" height="130" rx="18" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="814" y="156">HandlePaxosCmd</text>
+  <text x="814" y="172">1. SwitchToLocalView</text>
+  <text x="814" y="186">2. machine-&gt;Update</text>
+  <text x="814" y="200">3. kAcceptRemote</text>
+  <text x="814" y="214">4. local_updated</text>
+  <text x="814" y="228">5. StoreEntryInfo</text>
+  <text x="814" y="242">6. PlogReqQueue</text>
+  <text x="814" y="256">no Promise() call</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="950,210 1040,210 1040,288"/>
+  <rect x="978" y="202" width="76" height="14" fill="#fff"/>
+  <text x="1016" y="213" text-anchor="middle">PlogReqQueue</text>
+
+  <rect x="970" y="290" width="140" height="80" rx="12" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="974" y="306">MultiSetRecords</text>
+  <text x="974" y="322">1. SetRecord batch</text>
+  <text x="974" y="336">2. persist Accepted</text>
+  <text x="974" y="350">3. PlogRspQueue</text>
+  <text x="974" y="364">4. WriteBatch</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="970,330 880,330 880,388"/>
+  <rect x="838" y="322" width="76" height="14" fill="#fff"/>
+  <text x="876" y="333" text-anchor="middle">PlogRspQueue</text>
+
+  <rect x="810" y="390" width="140" height="80" rx="12" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="814" y="406">HandleSetFromPlog</text>
+  <text x="814" y="422">1. need_sync</text>
+  <text x="814" y="436">2. SyncToPeer</text>
+  <text x="814" y="450">3. MsgReqQueue</text>
+  <text x="814" y="464">4. unicast Accepted</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="810,430 720,430 720,458"/>
+  <rect x="678" y="422" width="76" height="14" fill="#fff"/>
+  <text x="716" y="433" text-anchor="middle">MsgReqQueue</text>
+
+  <rect x="650" y="460" width="140" height="56" rx="8" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="654" y="476">ConsumeMsgReqQueue</text>
+  <text x="654" y="492">1. serialize</text>
+  <text x="654" y="506">2. Write + Flush</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="720,516 720,536 638,536"/>
+  <rect x="650" y="528" width="52" height="14" fill="#fff"/>
+  <text x="676" y="539" text-anchor="middle">TCP back</text>
+
+  <rect x="490" y="500" width="140" height="70" rx="10.5" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="494" y="516">OnMessage</text>
+  <text x="494" y="532">1. HandleRead bytes</text>
+  <text x="494" y="546">2. CreateCmd</text>
+  <text x="494" y="560">3. EntityReqQueue</text>
+
+  <line x1="490" y1="536" x2="312" y2="536" stroke="#000" marker-end="url(#arr)"/>
+  <rect x="358" y="528" width="84" height="14" fill="#fff"/>
+  <text x="400" y="539" text-anchor="middle">EntityReqQueue</text>
+
+  <rect x="170" y="500" width="140" height="110" rx="16.5" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="174" y="516">HandlePaxosCmd</text>
+  <text x="174" y="532">1. Update(peer)</text>
+  <text x="174" y="546">2. majority Accept</text>
+  <text x="174" y="560">3. kChosen (memory)</text>
+  <text x="174" y="574">4. StoreEntryInfo</text>
+  <text x="174" y="588">5. PlogReqQueue</text>
+  <text x="174" y="602">1 peer enough (N=3)</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="310,560 400,560 400,628"/>
+  <rect x="328" y="552" width="76" height="14" fill="#fff"/>
+  <text x="366" y="563" text-anchor="middle">PlogReqQueue</text>
+
+  <rect x="330" y="630" width="140" height="72" rx="10" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="334" y="646">MultiSetRecords</text>
+  <text x="334" y="662">1. persist Chosen</text>
+  <text x="334" y="676">2. PlogRspQueue</text>
+  <text x="334" y="690">3. WriteBatch</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="400,702 400,722 240,722 240,738"/>
+  <rect x="292" y="714" width="76" height="14" fill="#fff"/>
+  <text x="330" y="725" text-anchor="middle">PlogRspQueue</text>
+
+  <rect x="170" y="740" width="140" height="80" rx="12" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="174" y="756">HandleSetFromPlog</text>
+  <text x="174" y="772">1. UpdateByChosenEntry</text>
+  <text x="174" y="786">2. pre_auth_entry=entry</text>
+  <text x="174" y="800">3. DbWorker async</text>
+  <text x="174" y="814">4. FinishClientCmd(0)</text>
+
+  <polyline fill="none" stroke="#000" marker-end="url(#arr)" points="170,780 80,780 80,888"/>
+  <rect x="88" y="772" width="84" height="14" fill="#fff"/>
+  <text x="130" y="783" text-anchor="middle">user_rsp_queue</text>
+
+  <rect x="10" y="890" width="140" height="20" rx="3" fill="#f8cecc" stroke="#b85450"/>
+  <text x="14" y="904">Notify / SyncWait ret 0</text>
+</svg>
