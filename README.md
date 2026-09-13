@@ -33,6 +33,8 @@ Please refer to the following publications for the technical details of PaxosSto
 
 ### Build
 
+After a fresh clone, fetch vendored deps with `git submodule update --init --recursive` (see [AGENTS.md](./AGENTS.md)), then:
+
 - [Certain](./certain): `cmake -S certain -B certain/build && cmake --build certain/build -j`
 - [PaxosKV](./paxoskv): `cmake -S paxoskv -B paxoskv/build && cmake --build paxoskv/build -j`
 

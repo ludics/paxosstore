@@ -51,3 +51,10 @@ certain/**/*_test
 *.swo
 *~
 .vscode/
+.cursor/
+
+# PDF docs / downloads
+*.pdf
+
+# Workspace leftover
+WORKSPACE

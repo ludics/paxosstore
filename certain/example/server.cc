@@ -9,6 +9,7 @@
 #include "tools/tools_service.h"
 
 #include <errno.h>
+#include <signal.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -79,6 +80,9 @@ int main(int argc, char* argv[]) {
     dbtype::Options options;
     options.create_if_missing = true;
     dbtype::Status status = dbtype::DB::Open(options, "test_plog.o", &db4plog);
+    if (!status.ok()) {
+      printf("DB::Open failed: %s\n", status.ToString().c_str());
+    }
     assert(status.ok());
   }
   PlogImpl plog_impl(db4plog);
@@ -112,6 +116,9 @@ int main(int argc, char* argv[]) {
     return -3;
   }
   tools_server.Start();
+
+  signal(SIGTERM, [](int) { g_stop = true; });
+  signal(SIGINT, [](int) { g_stop = true; });
 
   // 4. Exit if stop.
   while (!g_stop) {

@@ -269,6 +269,12 @@ if(CERTAIN_BUILD_EXAMPLES)
 
   add_executable(dump_entry tools/dump_entry.cc)
   target_link_libraries(dump_entry PRIVATE certain_default)
+
+  add_executable(inspect_plog tools/inspect_plog.cc)
+  target_link_libraries(inspect_plog PRIVATE certain_default)
+
+  add_executable(benchmark_client tools/benchmark_client.cc)
+  target_link_libraries(benchmark_client PRIVATE certain_default)
 endif()
 
 #------------------------------------------------------------------------------
