@@ -32,7 +32,7 @@ class RecoverWorker : public RoutineWorker<PaxosCmd> {
 
  private:
   Options* options_;
-  uint32_t worker_id_;
+  uint32_t worker_id_ __attribute__((unused));
   AsyncQueue* recover_req_queue_;
   TrafficLimiter limiter_;
 

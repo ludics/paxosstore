@@ -36,7 +36,9 @@ class MonitorImpl : public certain::Monitor {
   virtual void ReportUuidExist() override {
     OssAttrIncInner(monitor_id1_, 40, 1);
   }
-  virtual void ReportUuidNotExist() { OssAttrIncInner(monitor_id1_, 41, 1); }
+  virtual void ReportUuidNotExist() override {
+    OssAttrIncInner(monitor_id1_, 41, 1);
+  }
 
   // For EntityWorker/CatchupWorker/RecoverWorker.
   virtual void ReportRecoverTimeCost(int result, uint64_t us) override {
@@ -107,7 +109,7 @@ class MonitorImpl : public certain::Monitor {
   virtual void ReportEntryMemoryLimit() override {
     OssAttrIncInner(monitor_id1_, 82, 1);
   }
-  virtual void ReportChosenProposalNum(uint32_t num) {
+  virtual void ReportChosenProposalNum(uint32_t num) override {
     if (num < 10) {
       OssAttrIncInner(monitor_id1_, 89 + num, 1);
     } else {

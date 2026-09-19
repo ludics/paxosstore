@@ -18,7 +18,7 @@ class MsgSerialize : public SerializeCallBackBase {
 
   virtual int32_t ByteSize() override { return cmd_->SerializedByteSize(); }
 
-  virtual bool SerializeTo(char* buffer, uint32_t len);
+  virtual bool SerializeTo(char* buffer, uint32_t len) override;
 };
 
 }  // namespace certain

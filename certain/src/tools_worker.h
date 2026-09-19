@@ -22,7 +22,7 @@ class ToolsWorker : public RoutineWorker<ClientCmd> {
   void DoJob(std::unique_ptr<ClientCmd> job) final;
 
  private:
-  const Options& options_;
+  const Options& options_ __attribute__((unused));
   AsyncQueue& queue_;
 };
 

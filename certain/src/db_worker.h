@@ -31,9 +31,9 @@ class DbWorker : public RoutineWorker<ClientCmd> {
   void Tick() final { Tick::Run(); }
 
  private:
-  Options* options_;
+  Options* options_ __attribute__((unused));
   Monitor* monitor_;
-  uint32_t worker_id_;
+  uint32_t worker_id_ __attribute__((unused));
   Db* db_;
   AsyncQueue* db_req_queue_;
 };

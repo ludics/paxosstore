@@ -34,9 +34,9 @@ class PlogWorker : public ThreadBase {
  private:
   Options* options_;
   Monitor* monitor_;
-  uint32_t worker_id_;
+  uint32_t worker_id_ __attribute__((unused));
   Plog* plog_;
-  Db* db_;
+  Db* db_ __attribute__((unused));
 
   // entityworker -> plogworker
   AsyncQueue* plog_req_queue_;
@@ -64,8 +64,8 @@ class PlogReadonlyWorker : public RoutineWorker<PaxosCmd> {
   void GetRecord(const std::unique_ptr<PaxosCmd>& cmd);
 
  private:
-  uint32_t worker_id_;
-  Options* options_;
+  uint32_t worker_id_ __attribute__((unused));
+  Options* options_ __attribute__((unused));
   Monitor* monitor_;
   Plog* plog_;
   Db* db_;

@@ -2,7 +2,7 @@
 
 #include "certain/log.h"
 
-class LogImpl : public certain::LogBase {
+class LogImpl final : public certain::LogBase {
  public:
   LogImpl(const char* module, const char* path, certain::LogLevel log_level,
           bool log_to_stderr = false);
