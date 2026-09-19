@@ -178,7 +178,7 @@
 
 ## 7. 底层工具与系统原语库 (`certain/utils/`)
 
-为了在百万级 QPS 和微秒级延迟下避免锁竞争和内核态开销，Certain 精心打造了系列高性能系统原语。
+为了在百万级 QPS 和微秒级延迟下避免锁竞争和内核态开销，Certain 精心打造了系列高性能系统原语。结构不变量与 `LIGHTLIST` / `list_head` 实测见 [13. utils 原理](./13_UTILS_COMPONENTS.md)。
 
 | 文件路径 | 核心类 / 原语 | 提供了什么 & 实现了什么 |
 | :--- | :--- | :--- |
@@ -193,7 +193,7 @@
 | **`crc32.h`<br>`crc32.cc`** | `crc32(...)` | 高性能硬件/软件循环冗余校验计算，支撑业务 DB 的增量 CRC32 状态比对。 |
 | **`thread.h`<br>`thread.cc`** | `class ThreadBase`<br>`class ReadWriteLock`<br>`class Mutex` | **C++11 线程基类与 pthread 锁封装**。<br>• 提供线程命名、CPU 核心亲和性绑定（`SetAffinity`）、优雅停机等待（`WaitExit`）。 |
 | **`mem_pool.h`<br>`mem_pool.cc`** | `class MemPool` | **固定大小内存池**。<br>• 预分配大块连续内存，通过自由索引列表进行快速借还，避免频繁系统 `malloc/free` 产生内存碎片。 |
-| **`light_list.h`** | 宏 `LIGHTLIST` | **轻量级侵入式双向链表**。<br>• 采用宏定义实现的链表结构，零额外堆内存分配，直接嵌入到宿主结构体中。 |
+| **`light_list.h`** | 宏 `LIGHTLIST` | **轻量级侵入式双向链表**。<br>• 采用宏定义实现的链表结构，零额外堆内存分配，直接嵌入到宿主结构体中。<br>• 哨兵、NULL membership、与 `list_head` 的差异见 [13](./13_UTILS_COMPONENTS.md)。 |
 | **`hash.h`** | `Hash(...)` | 64 位无符号整数快速哈希散列函数，为实体分片寻址提供均匀分布。 |
 | **`time.h`** | `GetTimeByUsec()` 等 | 获取系统高精度单调时钟时间戳（微秒/毫秒/秒），提供计时器类 `TimeDelta`。 |
 | **`usetime_stat.h`** | `class UseTimeStat` | 耗时分位数统计器，自动统计并输出请求耗时的 Min、Avg、Max 及 P50/P90/P99。 |
@@ -227,6 +227,8 @@
 | **`inspect_plog.cc`** | PLog 物理文件解析器 | **底层存储诊断工具**。<br>• 直接以只读模式打开 RocksDB 数据目录（如 `test_plog.o`）；<br>• 遍历底层 SST 文件，按 24 字节大端序对齐解码 Key，输出 16 进制 Raw Hex；<br>• 反序列化 Protobuf `EntryRecord`，直观打印每个槽位的 `prepared/promised/accepted/chosen` 物理落盘记录。 |
 | **`benchmark_client.cc`**| 多线程阶梯压测工具 | **端到端基准压测客户端**。<br>• 支持多线程并发发压；<br>• 支持单 Key（`--single_entity=true`）与多 Key（多 Entity）模式自由切换；<br>• 输出高精度的耗时直方图、QPS 吞吐以及 P50 / P90 / P99 延迟分位数。 |
 | **`tinyrpc_bench.cc`** | TinyRPC 纯性能基准测试 | **RPC 框架性能评测工具**。<br>• 排除磁盘 I/O 与 Paxos 逻辑干扰，单机回环压测 TinyRPC 纯框架协议编解码与协程调度开销（实测单机超 30,000 QPS，平均网络延迟 130μs）。 |
+| **`light_list_bench.cc`** | 侵入式链表微基准 | 对比 Certain `LIGHTLIST`、用户态 Linux `list_head` 与 `std::list`：头尾插、drain、遍历、membership、LRU touch。数字写入 [13](./13_UTILS_COMPONENTS.md)。 |
+| **`expand_light_list.sh`** | 只展开 LIGHTLIST 宏 | 用 `-imacros light_list.h` 预处理 `light_list_test.cc` / `array_timer.h` / `lru_table.h`，写出 `light_list_expanded.cc`。 |
 | **`dump_entry.cc`** | 在线内存状态机快照工具 | **线上运维探测工具**。<br>• 通过 TinyRPC 连接正在运行的 Server 运维端口（12066+idx），向 `ToolsService` 发起查询并打印指定槽位在内存中的 Paxos 运行态快照。 |
 | **`tools_service.h`<br>`tools_service.cc`**| 运维 RPC 服务端实现 | 挂载于 `TinyServer` 上的运维服务实现端，将 `DumpEntry` 请求映射到底层 `Certain::DumpEntry`。 |
 

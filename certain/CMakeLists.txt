@@ -278,6 +278,9 @@ if(CERTAIN_BUILD_EXAMPLES)
 
   add_executable(tinyrpc_bench tools/tinyrpc_bench.cc)
   target_link_libraries(tinyrpc_bench PRIVATE certain_default)
+
+  add_executable(light_list_bench tools/light_list_bench.cc)
+  target_include_directories(light_list_bench PRIVATE ${CERTAIN_DIR})
 endif()
 
 #------------------------------------------------------------------------------
@@ -306,6 +309,7 @@ if(CERTAIN_BUILD_TESTS)
     utils/crc32_test.cc
     utils/lock_free_queue_test.cc
     utils/light_list_test.cc
+    utils/light_list_modern_test.cc
     utils/array_timer_test.cc
     utils/lru_table_test.cc
     utils/mem_pool_test.cc

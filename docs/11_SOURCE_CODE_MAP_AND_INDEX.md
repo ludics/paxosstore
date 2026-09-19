@@ -163,7 +163,7 @@ Certain 内置的微型 RPC 框架，天然与 Tencent `libco` 协程生态深�
 | **`co_lock.h`<br>`co_lock.cc`** | `class CoMutex`<br>`class DbEntityLock` | 协程友好的轻量级互斥锁与实体锁，让出 CPU 时挂起协程而非阻塞系统线程。 |
 | **`crc32.h`<br>`crc32.cc`** | `crc32()` | 快速循环冗余校验计算，支撑状态机增量 CRC 验证。 |
 | **`thread.h`<br>`thread.cc`** | `class ThreadBase`<br>`class ReadWriteLock` | 线程封装基类，提供线程命名、CPU 核心亲和性绑定（Affinity）以及 pthread 读写锁。 |
-| **`light_list.h`** | 宏 `LIGHTLIST` | 嵌入式侵入式双向链表，零堆内存分配。 |
+| **`light_list.h`** | 宏 `LIGHTLIST` | 嵌入式侵入式双向链表，零堆内存分配。原理与 `list_head` 对照见 [13](./13_UTILS_COMPONENTS.md)。 |
 | **`mem_pool.h`<br>`mem_pool.cc`** | `class MemPool` | 固定大小内存池，减少系统 `malloc/free` 碎片。 |
 | **`singleton.h`** | `class Singleton<T>` | 线程安全的 Meyer's 单例模式基类。 |
 | **`usetime_stat.h`** | `class UseTimeStat` | 耗时统计器，自动计算 Avg、P50、P90、P99 分位数。 |
@@ -181,6 +181,7 @@ Certain 内置的微型 RPC 框架，天然与 Tencent `libco` 协程生态深�
 | **`certain/tools/`** | `inspect_plog.cc` | **底层 PLog 解析工具**。直接读取 RocksDB 物理 SST 文件，逐字节 Hex 解码。 |
 | | `benchmark_client.cc`| **多线程压测客户端**。支持单/多 Key 切换，精确统计吞吐与 P50/P90/P99 延迟分布。 |
 | | `tinyrpc_bench.cc` | **TinyRPC 性能基准程序**。测试纯 RPC 传输时延与极限吞吐。 |
+| | `light_list_bench.cc` | **链表微基准**。对比 `LIGHTLIST`、Linux `list_head` 与 `std::list`。 |
 | | `dump_entry.cc` | **在线探测工具**。向节点发起 ToolsService RPC，输出运行态状态机文本。 |
 | **`certain/scripts/`** | `manage_cluster.sh` | 集群启停与状态运维管理脚本（`start/stop/restart/clean/status`）。 |
 | | `run_deep_dive_experiments.sh` | 一键自动化端到端功能验证实验（单调写、跳洞拒绝、空槽位检查、宕机与自愈）。 |
